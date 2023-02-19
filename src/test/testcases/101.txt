@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 abc
+=======
+"This is a string, containing tab 	"
+>>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20

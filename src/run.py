@@ -9,10 +9,16 @@ for path in ['./test/', './main/mt22/parser/']:
 ANTLR_JAR = os.environ.get('ANTLR_JAR')
 TARGET_DIR = '../target'
 GENERATE_DIR = 'main/mt22/parser'
+<<<<<<< HEAD
 print(ANTLR_JAR)
 
 def main(argv):
     print(argv)
+=======
+
+
+def main(argv):
+>>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
     if len(argv) < 1:
         printUsage()
     elif argv[0] == 'gen':

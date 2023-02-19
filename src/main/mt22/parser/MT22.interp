@@ -3,10 +3,84 @@ null
 null
 null
 null
+<<<<<<< HEAD
+=======
+'('
+')'
+','
+';'
+':'
+'{'
+'}'
+'='
+'['
+']'
+'.'
+'+'
+'-'
+'*'
+'/'
+'%'
+'!'
+'&&'
+'||'
+'=='
+'!='
+'<'
+'<='
+'>'
+'>='
+'::'
+null
+null
+null
+null
+null
+null
+null
+null
+>>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
 null
 
 token symbolic names:
 null
+<<<<<<< HEAD
+=======
+COMMENT
+BOOLEAN
+KEYWORD
+LEFT_PAREN
+RIGHT_PAREN
+COMMA
+SEMICOLON
+COLON
+LEFT_CURBRACK
+RIGHT_CURBRACK
+ASSIG_OP
+LEFT_SQUAREBRACK
+RIGHT_SQUAREBRACK
+DOT
+ADD_OP
+SUB_OP
+MUL_OP
+DIV_OP
+MOD_OP
+LOG_NOT_OP
+LOG_AND_OP
+LOG_OR_OP
+EQUAL_TO_OP
+NOT_EQUAL_TO_OP
+LESS_OP
+EQ_LESS_OP
+GREATER_OP
+GREATER_THAN_OP
+STRING_OP
+IDENTIFIERS
+INT_LIT
+STRINGLIT
+FLOAT_LIT
+ARRAY
+>>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
 WS
 ERROR_CHAR
 UNCLOSE_STRING
@@ -17,4 +91,8 @@ program
 
 
 atn:
+<<<<<<< HEAD
 [3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 6, 7, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 5, 2, 4, 3, 2, 2, 2, 4, 5, 7, 2, 2, 3, 5, 3, 3, 2, 2, 2, 2]
+=======
+[3, 24715, 42794, 33075, 47597, 16764, 15335, 30598, 22884, 3, 40, 7, 4, 2, 9, 2, 3, 2, 3, 2, 3, 2, 2, 2, 3, 2, 2, 2, 2, 5, 2, 4, 3, 2, 2, 2, 4, 5, 7, 2, 2, 3, 5, 3, 3, 2, 2, 2, 2]
+>>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
