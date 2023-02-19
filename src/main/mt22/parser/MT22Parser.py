@@ -11,11 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-<<<<<<< HEAD
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\6")
-=======
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3(")
->>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
         buf.write("\7\4\2\t\2\3\2\3\2\3\2\2\2\3\2\2\2\2\5\2\4\3\2\2\2\4\5")
         buf.write("\7\2\2\3\5\3\3\2\2\2\2")
         return buf.getvalue()
@@ -31,12 +27,6 @@ class MT22Parser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-<<<<<<< HEAD
-    literalNames = [  ]
-
-    symbolicNames = [ "<INVALID>", "WS", "ERROR_CHAR", "UNCLOSE_STRING", 
-                      "ILLEGAL_ESCAPE" ]
-=======
     literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "'('", "')'", "','", "';'", "':'", "'{'", "'}'", "'='", 
                      "'['", "']'", "'.'", "'+'", "'-'", "'*'", "'/'", "'%'", 
@@ -52,19 +42,12 @@ class MT22Parser ( Parser ):
                       "GREATER_OP", "GREATER_THAN_OP", "STRING_OP", "IDENTIFIERS", 
                       "INT_LIT", "STRINGLIT", "FLOAT_LIT", "ARRAY", "WS", 
                       "ERROR_CHAR", "UNCLOSE_STRING", "ILLEGAL_ESCAPE" ]
->>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
 
     RULE_program = 0
 
     ruleNames =  [ "program" ]
 
     EOF = Token.EOF
-<<<<<<< HEAD
-    WS=1
-    ERROR_CHAR=2
-    UNCLOSE_STRING=3
-    ILLEGAL_ESCAPE=4
-=======
     COMMENT=1
     BOOLEAN=2
     KEYWORD=3
@@ -103,7 +86,6 @@ class MT22Parser ( Parser ):
     ERROR_CHAR=36
     UNCLOSE_STRING=37
     ILLEGAL_ESCAPE=38
->>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)

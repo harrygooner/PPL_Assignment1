@@ -4,18 +4,6 @@ grammar MT22;
 from lexererr import *
 }
 
-<<<<<<< HEAD
-options{
-	language=Python3;
-}
-
-program:  EOF ;
-
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
-
-
-ERROR_CHAR: .;
-=======
 options {
 	language = Python3;
 }
@@ -102,6 +90,5 @@ WS: [ \t\r\n]+ -> skip;
 // skip spaces, tabs, newlines
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
->>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
 UNCLOSE_STRING: .;
 ILLEGAL_ESCAPE: .;
