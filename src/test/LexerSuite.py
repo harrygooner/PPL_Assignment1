@@ -4,11 +4,9 @@ from TestUtils import TestLexer
 
 class LexerSuite(unittest.TestCase):
 
-<<<<<<< HEAD
     def test_lowercase_identifier(self):
         """test identifiers"""
         self.assertTrue(TestLexer.test("abc", "abc,<EOF>", 101))
-=======
     def test_string_identifier(self):
         """test keywords"""
         self.assertTrue(TestLexer.test("\"This is a string, containing tab \t\"", "This is a string, containing tab \t,<EOF>", 101))
@@ -24,6 +22,5 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test("{\"Kangxi\", \"Yongzheng\", \"Qianlong\"}", "{\"Kangxi\", \"Yongzheng\", \"Qianlong\"},<EOF>", 104))
     def test_comment(self):
         """test keywords"""
-        self.assertTrue(TestLexer.test("01", "01,<EOF>", 105))
+        self.assertTrue(TestLexer.test("\"hello \n \"", "hello \n,<EOF>", 105))
     
->>>>>>> c2b4f5816e0aed3022b279e531c0c423b3053e20
