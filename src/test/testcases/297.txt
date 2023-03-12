@@ -1,0 +1,6 @@
+abcxyz: function str(fsdffsdfsd: string string) {
+                    return;
+                    return;
+                    break;
+                    continue;
+                }

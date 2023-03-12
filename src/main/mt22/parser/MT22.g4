@@ -1,3 +1,4 @@
+//STUDENT ID: 2052119
 grammar MT22;
 
 @lexer::header {
@@ -8,46 +9,53 @@ options {
 	language = Python3;
 }
 
-program: arr|vardecl|funcdecl|concat_expr|funcall_expr EOF;
-
+program: decls EOF;
+// statements: statement statements|statement;
+// statement: decl|stmt;
 //arr lexer
 arr: LEFT_CURBRACK arrayList RIGHT_CURBRACK;
 arrayList: non_null_arrayList |;
 non_null_arrayList: arrayEle COMMA non_null_arrayList | arrayEle;
-arrayEle: INT_LIT|FLOAT_LIT|STRING_LIT;
+arrayEle: expr;
+
+decls: decl decls|decl;
+decl:vardecl|funcdecl|arrayDecl;
+
+// stmtlist: stmt stmtlist|stmt;
 
 //Variable declaration
 vardecl: initVardecl|noninitVardecl;
 noninitVardecl: idlist COLON typ SEMICOLON;
 initVardecl: IDENTIFIER initVardeclEle expr SEMICOLON;
-initVardeclEle: (COMMA IDENTIFIER initVardeclEle expr COMMA) |COMMA IDENTIFIER COLON typ ASSIG_OP expr COMMA; 
+initVardeclEle: (COMMA IDENTIFIER initVardeclEle expr COMMA) | COLON typ ASSIG_OP; 
+arrayDecl:initAardecl|noninitAardecl;
+initAardecl:idlist COLON ARRAY_TYP LEFT_SQUAREBRACK (dimension) RIGHT_SQUAREBRACK OF typ ASSIG_OP exprlist SEMICOLON;
+noninitAardecl:idlist COLON ARRAY_TYP LEFT_SQUAREBRACK (dimension) RIGHT_SQUAREBRACK OF typ  SEMICOLON;
+dimension: expr COMMA dimension | expr;
 idlist: IDENTIFIER COMMA idlist|IDENTIFIER;
-typ: BOOLEAN|INT|FLOAT|ARRAY_TYP|STRING|VOID;
+typ: BOOLEAN|INT|FLOAT|ARRAY_TYP|STRING|AUTO;
 exprlist: non_null_exprlist|;
 non_null_exprlist: expr COMMA exprlist|expr;
-expr: 'expr';
-
 //Parameter declaration
-paradecl: OUT? IDENTIFIER COLON typ;
+paradecl: INHERIT? OUT? ((IDENTIFIER COLON typ)|(idlist COLON ARRAY_TYP LEFT_SQUAREBRACK (dimension) RIGHT_SQUAREBRACK OF typ)) ;
 
 //Function declaration
-funcdecl: IDENTIFIER COLON FUNCTION typ paramlist (INHERIT IDENTIFIER)? body;
+funcdecl: funcdecl_noInherit|funcdecl_Inherit;
+funcdecl_noInherit:IDENTIFIER COLON FUNCTION functyp paramlist block_stmt;
+funcdecl_Inherit:IDENTIFIER COLON FUNCTION functyp paramlist INHERIT IDENTIFIER block_stmt;
+functyp:BOOLEAN|INT|FLOAT|ARRAY_TYP|STRING|VOID|AUTO|(ARRAY_TYP LEFT_SQUAREBRACK (dimension) RIGHT_SQUAREBRACK OF typ);
 paramlist: LEFT_PAREN params RIGHT_PAREN;
 params: non_null_params|;
 non_null_params: paradecl COMMA non_null_params|paradecl;
-body: LEFT_CURBRACK RIGHT_CURBRACK;
+
 //body: LEFT_CURBRACK bodyelements RIGHT_CURBRACK;
 
 //EXPRESSIONS
-concat_expr: concat_operand CONCAT_OP concat_operand | relational_expr;
-concat_operand:STRING_LIT | IDENTIFIER;
-relational_expr: relational_EQ_expr|relational_noEQ_expr | logical_expr;
-relational_EQ_expr: relational_EQ_operand relational_EQ_op relational_EQ_operand;
-relational_noEQ_expr:relational_noEQ_operand relational_noEQ_op relational_noEQ_operand;
-relational_EQ_operand: BOOL_LIT|INT_LIT|IDENTIFIER;
+expr: relational_expr CONCAT_OP relational_expr | relational_expr;
+//concat_operand:STRING_LIT | IDENTIFIER;
+relational_expr: logical_expr (relational_EQ_op|relational_noEQ_op) logical_expr|logical_expr;
 relational_EQ_op:EQUAL_TO_OP|NOT_EQUAL_TO_OP;
 relational_noEQ_op: LESS_OP|EQ_LESS_OP|GREATER_OP|EQ_GREATER_OP;
-relational_noEQ_operand:FLOAT_LIT|INT_LIT|IDENTIFIER;
 logical_expr: logical_expr logical_op add_expr|add_expr;
 logical_op:CONJ_OP|DISJ_OP;
 add_expr: add_expr (ADD_OP|SUB_OP) mul_expr|mul_expr;
@@ -55,12 +63,58 @@ mul_expr: mul_expr mul_op nega_expr|nega_expr;
 mul_op: MUL_OP|DIV_OP|MOD_OP;
 nega_expr: NEGA_OP nega_expr|sign_expr;
 sign_expr: SUB_OP sign_expr|index_expr;
-index_expr: IDENTIFIER LEFT_SQUAREBRACK index_list RIGHT_SQUAREBRACK| subexpr ;
-index_list:  INT_LIT COMMA index_list|INT_LIT ;
-subexpr:IDENTIFIER |BOOL_LIT| INT_LIT | FLOAT_LIT | LEFT_PAREN concat_expr RIGHT_PAREN;
-funcall_expr: IDENTIFIER LEFT_PAREN argulist RIGHT_PAREN;
-argulist: IDENTIFIER COMMA argulist|IDENTIFIER;
-COMMENT: '/*' .*? '*/' | ('//' (~[\r\n]*)?) ;
+index_expr: IDENTIFIER LEFT_SQUAREBRACK index_list RIGHT_SQUAREBRACK| funcall_expr ;
+index_list:  expr COMMA index_list|expr ;
+funcall_expr: IDENTIFIER LEFT_PAREN exprlist RIGHT_PAREN|subexpr;
+subexpr:IDENTIFIER |BOOL_LIT| INT_LIT | FLOAT_LIT |STRING_LIT|arr| LEFT_PAREN expr RIGHT_PAREN|special_function;
+
+
+
+//stmt
+
+stmt: matchStmt | unmatchStmt ;
+assign_stmt: lhs ASSIG_OP expr SEMICOLON;
+lhs: IDENTIFIER|(IDENTIFIER LEFT_SQUAREBRACK index_list RIGHT_SQUAREBRACK);
+unmatchStmt: IF LEFT_PAREN expr RIGHT_PAREN stmt | IF LEFT_PAREN expr RIGHT_PAREN matchStmt ELSE unmatchStmt ;
+matchStmt: IF LEFT_PAREN expr RIGHT_PAREN matchStmt ELSE matchStmt
+|for_stmt |while_stmt|do_while_stmt|break_stmt|continue_stmt|return_stmt|call_stmt|block_stmt|assign_stmt;
+for_stmt: FOR LEFT_PAREN IDENTIFIER ASSIG_OP expr /*init_expr*/ COMMA expr COMMA expr RIGHT_PAREN stmt;
+while_stmt:WHILE LEFT_PAREN expr RIGHT_PAREN/*condition_expr*/ stmt;
+do_while_stmt: DO stmt WHILE LEFT_PAREN expr RIGHT_PAREN SEMICOLON /*condition_expr*/;
+break_stmt: BREAK SEMICOLON;
+continue_stmt: CONTINUE SEMICOLON;
+return_stmt:(RETURN expr SEMICOLON) | RETURN SEMICOLON;
+call_stmt:IDENTIFIER LEFT_PAREN exprlist RIGHT_PAREN SEMICOLON|special_function SEMICOLON;
+block_stmt:LEFT_CURBRACK blockelements RIGHT_CURBRACK;
+blockelements: non_null_blockelements|;
+non_null_blockelements: blockelement non_null_blockelements| blockelement;
+blockelement: stmt|vardecl|arrayDecl;
+
+//special function
+special_function:read_integer|print_integer|read_float|write_float|read_boolean|print_boolean|read_string|print_string|super_func|prevent_default;
+read_integer: READINT LEFT_PAREN RIGHT_PAREN;
+READINT: 'readInteger';
+print_integer: PRINTINT LEFT_PAREN (INT_LIT|IDENTIFIER) RIGHT_PAREN;
+PRINTINT: 'printInteger';
+read_float: READFLOAT LEFT_PAREN RIGHT_PAREN;
+READFLOAT: 'readFloat';
+write_float:WRITEFLOAT LEFT_PAREN (FLOAT_LIT|IDENTIFIER) RIGHT_PAREN; 
+WRITEFLOAT: 'writeFloat'; 
+read_boolean: READBOOLEAN LEFT_PAREN RIGHT_PAREN;
+READBOOLEAN:'readBoolean';
+print_boolean:PRINTBOOL LEFT_PAREN (BOOL_LIT|IDENTIFIER) RIGHT_PAREN;
+PRINTBOOL:'printBoolean';
+read_string:READSTRING LEFT_PAREN RIGHT_PAREN;
+READSTRING:'readString';
+print_string:PRINTSTRING LEFT_PAREN (STRING_LIT|IDENTIFIER) RIGHT_PAREN;
+PRINTSTRING:'printString';
+super_func: SUPERFUNC exprlist;
+SUPERFUNC:'super';
+prevent_default:PREVENTDEFAULT LEFT_PAREN RIGHT_PAREN;
+PREVENTDEFAULT:'preventDefault';
+
+COMMENT: ('/*' .*? '*/'  | ('//' (~[\r\n\f])*) ) -> skip;
+
 
 BOOL_LIT: 'false' | 'true';
 
@@ -83,7 +137,7 @@ OF: 'of';
 ELSE: 'else';
 IF: 'if';
 WHILE: 'while';
-INHERIT: 'inherit' {self.text = 'KEYWORD'};
+INHERIT: 'inherit';
 
 //OPERATORS
 ADD_OP: '+';
@@ -100,7 +154,7 @@ LESS_OP: '<';
 EQ_LESS_OP: '<=';
 GREATER_OP: '>';
 EQ_GREATER_OP: '>=';
-CONCAT_OP: '::' {self.text = 'OPERATORS'};
+CONCAT_OP: '::' ;
 
 
 
@@ -109,7 +163,7 @@ LEFT_PAREN: '(';
 RIGHT_PAREN: ')';
 COMMA: ',';
 SEMICOLON: ';';
-COLON: ':.?';
+COLON: ':';
 LEFT_CURBRACK: '{';
 RIGHT_CURBRACK: '}';
 ASSIG_OP: '=';
@@ -119,24 +173,44 @@ DOT: '.';
 
 
 
-IDENTIFIER: ([a-z_] [a-z0-9]*);
+IDENTIFIER: ([a-zA-Z_] [a-zA-Z0-9_]*);
 
 
 //LITERALS
-INT_LIT: ([1-9] DIGIT*? [_])+ (DIGIT DIGIT? DIGIT?) {self.text = "".join(self.text.split("_"))
+INT_LIT: [1-9] DIGIT*? ('_'? DIGIT DIGIT*?)* {self.text = "".join(self.text.split("_"))
 		}
-	| '0\n'
-	| [1-9] DIGIT*;
+	| [1-9] DIGIT*
+	|[0];
 fragment DIGIT: [0-9];
-INDEX:([0-9]|[1-9][0-9]+);
-STRING_LIT: '"' (~["\n] | '\\"')* '"' {self.text = self.text[1:-1]} | '"' (~'"' | '\\"')*  '\n' (~'"' | '\\"')*  '"' {raise IllegalEscape(self.text)};
+//INDEX:([0-9]|[1-9][0-9]+);
+
+//STRING
+// STRING_LIT:(~'"'|'\\"')* '"';
+STRING_LIT: '"'STRING_CHAR* '"' {self.text = self.text[1:-1]} ;
+ILLEGAL_ESCAPE:'"'STRING_CHAR* ILLEGALFRAG {raise IllegalEscape(self.text[1:])};
+UNCLOSE_STRING:'"'STRING_CHAR* ([\n\r]|EOF){
+	if (self.text.find('\n') != -1) :
+		raise UncloseString(self.text[1:(self.text.find('\n')-1)])
+	elif (self.text.find('\r') != -1):
+		raise UncloseString(self.text[1:self.text.find('\r')])	
+	elif(self.text[-1]=='\"'):
+		raise UncloseString(self.text[1:-1])
+	else:
+		raise UncloseString(self.text[1:])	
+} ;
+
+fragment STRING_CHAR:~["\\\b\f\n\r] |ESCAPEFRAG;
+fragment ESCAPEFRAG: '\\' ["\\brfnt];
+fragment ILLEGALFRAG: '\\' ~["\\brfnt];
+
+
 
 FLOAT_LIT:
-	INT_LIT DECPART {self.text = "".join(self.text.split("_"))}
-	| INT_LIT DECPART EXPPART {self.text = "".join(self.text.split("_"))
-											};
-fragment DECPART: '.' [0-9]+;
-fragment EXPPART: [eE] '-'? [0-9]+;
+	INT_LIT DECPART EXPPART {self.text = "".join(self.text.split("_"))}
+	| DECPART EXPPART| INT_LIT EXPPART{self.text = "".join(self.text.split("_"))}
+	|INT_LIT DECPART {self.text = "".join(self.text.split("_"))}										;
+fragment DECPART: '.' [0-9]*; //1.
+fragment EXPPART: [eE] ('-'|'+')? [0-9]+;
 
 //ARRAY: [{] ([ ]? ELEMENT ',')* ([ ]? ELEMENT)? [}];
 //fragment ELEMENT: ( INT_LIT | STRING_LIT| FLOAT_LIT);
@@ -145,5 +219,5 @@ WS: [ \t\r\n]+ -> skip;
 // skip spaces, tabs, newlines
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
-UNCLOSE_STRING: .;
-ILLEGAL_ESCAPE: .;
+
+//ILLEGAL_ESCAPE:'"'STRING_CHAR* ('\\'~[bfrnt']) STRING_CHAR*'"' {raise IllegalEscape(self.text[1:])};

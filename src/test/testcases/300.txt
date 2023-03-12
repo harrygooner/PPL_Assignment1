@@ -1,0 +1,3 @@
+QuaMonPPL: function auto()(aaaaa: string) {
+                    return "Co cai nit";
+                }

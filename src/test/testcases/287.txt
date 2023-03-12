@@ -1,0 +1,9 @@
+123: function stringstringstring(out out out: string) inherit inherit {
+                    return {
+                        return {
+                            return {
+                                return 123ab;
+                            }
+                        }
+                    }
+                }

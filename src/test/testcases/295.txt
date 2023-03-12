@@ -1,0 +1,3 @@
+mainnn: function auto(out inherit aaa,aaaa: main) {
+                    return;
+                }

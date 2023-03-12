@@ -1,0 +1,2 @@
+inc : function void ( out n : integer , d :n = n + delta ;
+        }

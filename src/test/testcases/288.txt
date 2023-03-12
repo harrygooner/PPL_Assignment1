@@ -1,0 +1,10 @@
+aaaa: function string(out a: integer) {
+                    do {
+                        return;
+                    }
+                    while i+i;
+                    rewte = function(aaaa, fdssdfodfs, dsffww);
+                    sdfdwwprew()
+                    aaaa: string = "a123213", dfsfde, 123214;
+                    return 123abfds;
+                }

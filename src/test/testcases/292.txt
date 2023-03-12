@@ -1,0 +1,5 @@
+aaa: auto = {123213,213213};
+                fdewew, strings: string = {2313,213123}, 123213
+                aaaa, aaaaa, bbbb: string = ;
+                fdsfsdfsdfds: auto,string = 24234, 32432432;
+                

@@ -1,0 +1,4 @@
+fact: function integer (n: integer) {
+                    a = 4;
+                    if (a>3) a = 5;
+                }

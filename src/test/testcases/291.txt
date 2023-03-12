@@ -1,0 +1,9 @@
+sdfdsfdsf: function string() {
+                    a = dfsfwer / 34324 ;
+                    wqeqe = 1234ab + fdsfd2 ;
+                    fff: function auto(inherit out t: auto) {
+                        return;
+                        return;
+                    }
+                    if a == 2 else {};
+                }

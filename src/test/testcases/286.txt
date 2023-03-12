@@ -1,0 +1,9 @@
+abc: function string(inherit out sdd: string) inherit 123 {
+                    dsfd = fsdferwer + fsdlhfep / fdsofdsf;
+                    for (idwewr; fdsfewpfew; fdspwer) {
+                        {
+                            ohohohohohohohohoho;
+                        }
+                    }
+                    rewrpwer: string = "32432434", {13232,{2133,21321},{abdfgfgf}};
+                }

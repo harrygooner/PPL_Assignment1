@@ -1,0 +1,14 @@
+main: function void() {
+    sdfdsdv: function string () {}
+    dsffsd: string = sdfdfsfsd;
+    wofewp = dflfd + dfskhdos && 312973 / hdsofd :: ofdfdf;
+    sdfdsdfssdf = dsflhfdlhfdshfld + sfdslfdkhlsdf - fdskhiwqds;
+    _dshfo413246: function array [1,2] of integer () {
+        ewrwhro[0,1,2] = fdshlfshdlfds + 123465464 / 546461;
+        sdfhds: boolean = "sdhfdsfd";
+        fdsfds = 165461;
+        return fdsjfwp;
+        return 4213165;
+        return {1,2,3,4};
+    }
+}

@@ -1,0 +1,5 @@
+sdfdsf: integer = 2,3,4;
+                reerwrewr: fperewprerw = 324324432;
+                ffddsfdssdsdfdsf, fdsfwewrrew: function void() {
+
+                }

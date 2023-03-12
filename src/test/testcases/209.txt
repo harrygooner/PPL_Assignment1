@@ -1,0 +1,4 @@
+main: function void() { 
+            do{ a : auto = readInteger();}
+            while (1==2);
+        }

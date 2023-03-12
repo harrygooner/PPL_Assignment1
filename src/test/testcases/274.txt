@@ -1,0 +1,16 @@
+
+                    f: function integer(out a: string) inherit vod {
+                        do {
+                            a = a + 1;
+                        }
+                        while (i + 1);
+                        return a;
+                    }
+                    z: function string( t: auto) {
+                        for (j = 0, j < 5, j+1) {
+                            if (j == 2) continue;
+                            else if (j == 4) return j;
+                        }
+                        return "abc";
+                    }
+                

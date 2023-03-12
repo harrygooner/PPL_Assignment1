@@ -1,1 +1,1 @@
-foo(a,b)
+main: function void(out a: array [1+1,2] of void) { }

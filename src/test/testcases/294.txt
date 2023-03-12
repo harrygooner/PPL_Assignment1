@@ -1,0 +1,7 @@
+dsrwewre: integer = 213214_213213, dffdsb;
+                ewqrew, fiewr: function foo(123213);
+                dsffwer: boolean = 324324;
+                ewrerwerw: function auto(out inherit asadf: string) {
+
+                }
+                

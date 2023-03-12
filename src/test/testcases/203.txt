@@ -1,1 +1,3 @@
-!(!op&&op)
+main: function void() {
+            a : integer;
+         }

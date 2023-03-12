@@ -1,0 +1,4 @@
+inc: function void (out n: integer, delta: integer) {
+                    a = 2;
+                    b = 3;
+                }
